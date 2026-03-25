@@ -2,5 +2,9 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/dgcxs8dd2koc/public_html/
+    # This copies your website files
     - /bin/cp -R src/frontend/dist/* $DEPLOYPATH
+    # This copies your images (since they were missing before)
     - /bin/cp -R frontend/public/* $DEPLOYPATH
+    # This copies your new enquiry form script
+    - /bin/cp frontend/contact.php $DEPLOYPATH
