@@ -2,9 +2,9 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/dgcxs8dd2koc/public_html/
-    # This copies your website files
+    # Deploys your main website (Vite build)
     - /bin/cp -R src/frontend/dist/* $DEPLOYPATH
-    # This copies your images (since they were missing before)
+    # Fixes the missing images
     - /bin/cp -R frontend/public/* $DEPLOYPATH
-    # This copies your new enquiry form script
+    # Deploys the form handler to the live folder
     - /bin/cp frontend/contact.php $DEPLOYPATH
