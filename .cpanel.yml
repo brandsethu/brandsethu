@@ -3,3 +3,4 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/dgcxs8dd2koc/public_html/
     - /bin/cp -R src/frontend/dist/* $DEPLOYPATH
+    - /bin/cp -R frontend/public/* $DEPLOYPATH
