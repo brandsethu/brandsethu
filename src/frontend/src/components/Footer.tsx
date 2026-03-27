@@ -1,4 +1,10 @@
-import { SiFacebook, SiLinkedin, SiWhatsapp, SiX } from "react-icons/si";
+import {
+  SiFacebook,
+  SiInstagram,
+  SiLinkedin,
+  SiWhatsapp,
+  SiX,
+} from "react-icons/si";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -12,16 +18,16 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="mb-5">
+            <div className="mb-5 bg-white rounded-xl p-2 inline-block">
               <img
-                src="/assets/generated/brandsethu-logo-transparent.dim_400x120.png"
-                alt="Brandsethu Pvt Ltd"
-                className="h-10 w-auto object-contain brightness-0 invert"
+                src="/assets/uploads/logo-019d300a-b4af-7279-b582-865cbef1feea-1.jpeg"
+                alt="BrandSethu Pvt Ltd"
+                className="h-10 w-auto object-contain"
               />
             </div>
             <p className="text-white/60 text-sm leading-relaxed">
-              Bridging the gap between manufacturers and corporates with
-              reliable sourcing, quality products, and end-to-end logistics.
+              Enterprise Sales Growth Partner — connecting product brands with
+              institutional and corporate buyers across India.
             </p>
             <div className="flex gap-3 mt-6">
               <a
@@ -55,6 +61,16 @@ export default function Footer() {
                 <SiX size={14} />
               </a>
               <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-pink-500 flex items-center justify-center transition-colors"
+                data-ocid="footer.link"
+              >
+                <SiInstagram size={15} />
+              </a>
+              <a
                 href="https://wa.me/919920989333"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -74,10 +90,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: "Our Story", href: "#why" },
-                { label: "How It Works", href: "#products" },
-                { label: "Partnerships", href: "#logistics" },
-                { label: "Careers", href: "#quote" },
+                { label: "About Us", href: "#about" },
+                { label: "What We Do", href: "#products" },
+                { label: "Brand Partners", href: "#brands" },
                 { label: "Contact Us", href: "#quote" },
               ].map((item) => (
                 <li key={item.label}>
@@ -100,12 +115,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: "Tissues & Hygiene", href: "#products" },
-                { label: "Corrugated Boxes", href: "#products" },
-                { label: "Corporate Gifting", href: "#products" },
-                { label: "Logistics Services", href: "#logistics" },
-                { label: "Warehousing", href: "#logistics" },
-                { label: "Custom Sourcing", href: "#quote" },
+                { label: "Logistics — TruMove", href: "#products" },
+                { label: "Hygiene — FRESHONES", href: "#products" },
+                { label: "Packaging — LET'S PAC", href: "#products" },
+                { label: "Giftings — CORRUGA", href: "#products" },
+                { label: "Export — NKB", href: "#products" },
               ].map((item) => (
                 <li key={item.label}>
                   <a
@@ -145,6 +159,7 @@ export default function Footer() {
                 </svg>
                 <a
                   href="mailto:business@brandsethu.in"
+                  rel="noopener noreferrer"
                   className="text-sm text-white/60 hover:text-white transition-colors"
                 >
                   business@brandsethu.in
@@ -227,7 +242,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/50">
-            &copy; {year} Brandsethu Pvt Ltd. All rights reserved.
+            &copy; {year} BrandSethu Pvt Ltd. All rights reserved.
           </p>
           <p className="text-sm text-white/40">
             Built with ❤️ using{" "}

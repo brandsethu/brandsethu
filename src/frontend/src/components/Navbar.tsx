@@ -4,13 +4,21 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { label: "Products", href: "#products" },
-  { label: "Services", href: "#logistics" },
-  { label: "About Us", href: "#why" },
-  { label: "Contact", href: "#quote" },
+  { label: "Home", page: "home" },
+  { label: "About Us", page: "about" },
+  { label: "Products & Services", page: "products" },
+  { label: "Industries", page: "industries" },
+  { label: "Our Partners", page: "partners" },
+  { label: "We're Hiring", page: "careers", highlight: true },
+  { label: "Contact", page: "contact" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  activePage: string;
+  setActivePage: (page: string) => void;
+}
+
+export default function Navbar({ activePage, setActivePage }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -20,48 +28,61 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const handleMobileNav = () => setMobileOpen(false);
-
-  const handleMobileQuote = () => {
+  const handleNav = (page: string) => {
+    setActivePage(page);
     setMobileOpen(false);
-    const el = document.getElementById("quote");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handlePartnerWithUs = () => {
+    setActivePage("contact");
+    setMobileOpen(false);
   };
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-card"
-          : "bg-white/90 backdrop-blur-sm"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white ${
+        scrolled ? "shadow-card" : ""
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a
-            href="#top"
+          <button
+            type="button"
+            onClick={() => handleNav("home")}
             className="flex items-center group"
             data-ocid="nav.link"
           >
             <img
-              src="/assets/generated/brandsethu-logo-transparent.dim_400x120.png"
-              alt="Brandsethu Pvt Ltd"
-              className="h-10 w-auto object-contain"
+              src="/assets/uploads/logo-019d300a-b4af-7279-b582-865cbef1feea-1.jpeg"
+              alt="BrandSethu Pvt Ltd"
+              className="h-12 w-auto object-contain"
             />
-          </a>
+          </button>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
+              <button
+                key={link.page}
+                type="button"
+                onClick={() => handleNav(link.page)}
                 data-ocid="nav.link"
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all duration-150"
+                className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
+                  link.highlight
+                    ? activePage === link.page
+                      ? "bg-orange-500 text-white font-bold shadow-sm"
+                      : "bg-orange-100 text-orange-700 hover:bg-orange-500 hover:text-white font-semibold"
+                    : activePage === link.page
+                      ? "text-foreground font-bold bg-muted"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                }`}
               >
+                {link.highlight && (
+                  <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse" />
+                )}
                 {link.label}
-              </a>
+              </button>
             ))}
           </div>
 
@@ -86,11 +107,12 @@ export default function Navbar() {
               WhatsApp
             </a>
             <Button
-              asChild
+              type="button"
+              onClick={handlePartnerWithUs}
               className="rounded-full bg-teal hover:bg-teal-dark text-white font-semibold px-6 shadow-sm"
               data-ocid="nav.primary_button"
             >
-              <a href="#quote">Get A Quote</a>
+              Partner With Us
             </Button>
           </div>
 
@@ -118,21 +140,32 @@ export default function Navbar() {
           >
             <div className="px-4 py-4 flex flex-col gap-1">
               {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={handleMobileNav}
-                  className="px-4 py-3 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+                <button
+                  key={link.page}
+                  type="button"
+                  onClick={() => handleNav(link.page)}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors text-left ${
+                    link.highlight
+                      ? activePage === link.page
+                        ? "bg-orange-500 text-white font-bold"
+                        : "bg-orange-100 text-orange-700 font-semibold"
+                      : activePage === link.page
+                        ? "bg-muted text-foreground font-bold"
+                        : "text-foreground hover:bg-muted"
+                  }`}
                   data-ocid="nav.link"
                 >
+                  {link.highlight && (
+                    <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse" />
+                  )}
                   {link.label}
-                </a>
+                </button>
               ))}
               <a
                 href="https://wa.me/919920989333"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={handleMobileNav}
+                onClick={() => setMobileOpen(false)}
                 className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold px-6 py-2.5 text-sm transition-colors"
                 data-ocid="nav.link"
               >
@@ -149,11 +182,11 @@ export default function Navbar() {
               </a>
               <button
                 type="button"
-                onClick={handleMobileQuote}
+                onClick={handlePartnerWithUs}
                 className="mt-1 inline-flex items-center justify-center rounded-full bg-teal hover:bg-teal-dark text-white font-semibold px-6 py-2.5 text-sm transition-colors"
                 data-ocid="nav.primary_button"
               >
-                Get A Quote
+                Partner With Us
               </button>
             </div>
           </motion.div>

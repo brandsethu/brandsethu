@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Button as Btn } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -9,18 +10,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle, Loader2 } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
-import { toast } from "sonner";
-import { useSubmitRequest } from "../hooks/useQueries";
 
 const interests = [
-  "Tissues & Hygiene Products",
-  "Corrugated Boxes & Packaging",
-  "Corporate Gifting & Merchandising",
-  "Logistics & Warehousing Services",
-  "Custom Product Sourcing",
+  "Logistics & Transport (TruMove)",
+  "Hygiene Products (FRESHONES)",
+  "Packaging Solutions (LET'S PAC)",
+  "Corporate Gifting (CORRUGA / MATRIX)",
+  "Export Solutions (NKB)",
+  "Brand Partnership / Enterprise Sales",
   "Multiple Products / Services",
 ];
 
@@ -29,6 +29,7 @@ const contactDetails = [
     label: "Email Us",
     value: "business@brandsethu.in",
     href: "mailto:business@brandsethu.in",
+    external: true,
     icon: (
       <svg
         aria-hidden="true"
@@ -122,27 +123,17 @@ export default function QuoteForm() {
     message: "",
   });
   const [success, setSuccess] = useState(false);
-  const { mutateAsync, isPending } = useSubmitRequest();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await mutateAsync({
-        companyName: form.companyName,
-        contactPerson: form.contactPerson,
-        email: form.email,
-        phone: form.phone,
-        interest: form.interest,
-        message: form.message,
-        timestamp: BigInt(Date.now()),
-      });
-      setSuccess(true);
-      toast.success(
-        "Quote request submitted! We'll get back to you within 24 hours.",
-      );
-    } catch {
-      toast.error("Something went wrong. Please try again.");
-    }
+    const subject = encodeURIComponent(
+      `Quote Request from ${form.companyName} — ${form.interest}`,
+    );
+    const body = encodeURIComponent(
+      `Company: ${form.companyName}\nContact Person: ${form.contactPerson}\nEmail: ${form.email}\nPhone: ${form.phone}\nInterest: ${form.interest}\n\nMessage:\n${form.message}`,
+    );
+    window.location.href = `mailto:business@brandsethu.in?subject=${subject}&body=${body}`;
+    setSuccess(true);
   };
 
   return (
@@ -209,20 +200,20 @@ export default function QuoteForm() {
                   strokeWidth={1.5}
                 />
                 <h3 className="text-xl font-bold text-foreground mb-2">
-                  Quote Request Received!
+                  Opening Email Client...
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  Thank you for reaching out. Our team will review your
-                  requirements and get back to you within 24 hours.
+                  Your email client should open with your request pre-filled.
+                  Send it to complete your submission.
                 </p>
-                <Button
+                <Btn
                   variant="outline"
                   className="mt-6 rounded-full border-teal text-teal hover:bg-white"
                   onClick={() => setSuccess(false)}
                   data-ocid="quote.secondary_button"
                 >
                   Submit Another Request
-                </Button>
+                </Btn>
               </div>
             ) : (
               <form
@@ -367,28 +358,17 @@ export default function QuoteForm() {
                 <Button
                   type="submit"
                   size="lg"
-                  disabled={isPending || !form.interest}
+                  disabled={!form.interest}
                   className="w-full rounded-full bg-teal hover:bg-teal-dark text-white font-semibold shadow-sm"
                   data-ocid="quote.submit_button"
                 >
-                  {isPending ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                      Submitting...
-                    </>
-                  ) : (
-                    "Submit Quote Request"
-                  )}
+                  Send Quote Request
                 </Button>
 
-                {isPending && (
-                  <div
-                    className="text-center text-xs text-muted-foreground"
-                    data-ocid="quote.loading_state"
-                  >
-                    Processing your request...
-                  </div>
-                )}
+                <p className="text-center text-xs text-muted-foreground">
+                  This will open your email client with the form pre-filled to
+                  send to business@brandsethu.in
+                </p>
               </form>
             )}
           </motion.div>

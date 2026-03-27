@@ -1,12 +1,21 @@
 import { Toaster } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+import AboutUs from "./components/AboutUs";
+import AppointmentCTA from "./components/AppointmentCTA";
+import BrandAssociation from "./components/BrandAssociation";
+import Careers from "./components/Careers";
 import ExpandingPortfolio from "./components/ExpandingPortfolio";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
-import Logistics from "./components/Logistics";
+import HomeBanner from "./components/HomeBanner";
+import HowItWorks from "./components/HowItWorks";
+import IndustriesWeServe from "./components/IndustriesWeServe";
 import Navbar from "./components/Navbar";
+import PageNavCards from "./components/PageNavCards";
 import Products from "./components/Products";
 import QuoteForm from "./components/QuoteForm";
+import StatsCounter from "./components/StatsCounter";
 import WhyBrandSethu from "./components/WhyBrandSethu";
 
 const queryClient = new QueryClient();
@@ -34,18 +43,75 @@ function WhatsAppFAB() {
   );
 }
 
+type Page =
+  | "home"
+  | "about"
+  | "products"
+  | "industries"
+  | "partners"
+  | "careers"
+  | "contact";
+
+function PageContent({
+  activePage,
+  onNavigate,
+}: {
+  activePage: Page;
+  onNavigate: (page: string) => void;
+}) {
+  switch (activePage) {
+    case "home":
+      return (
+        <>
+          <Hero onNavigate={onNavigate} />
+          <PageNavCards onNavigate={onNavigate} />
+          <HomeBanner onNavigate={onNavigate} />
+          <StatsCounter />
+          <ExpandingPortfolio onNavigate={onNavigate} />
+          <AppointmentCTA />
+        </>
+      );
+    case "about":
+      return (
+        <>
+          <AboutUs />
+          <WhyBrandSethu />
+        </>
+      );
+    case "products":
+      return <Products />;
+    case "industries":
+      return <IndustriesWeServe />;
+    case "partners":
+      return <BrandAssociation />;
+    case "careers":
+      return <Careers />;
+    case "contact":
+      return (
+        <>
+          <HowItWorks />
+          <QuoteForm />
+        </>
+      );
+    default:
+      return null;
+  }
+}
+
 export default function App() {
+  const [activePage, setActivePage] = useState<Page>("home");
+
+  const handlePageChange = (page: string) => {
+    setActivePage(page as Page);
+    window.scrollTo(0, 0);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background">
-        <Navbar />
+        <Navbar activePage={activePage} setActivePage={handlePageChange} />
         <main>
-          <Hero />
-          <Products />
-          <ExpandingPortfolio />
-          <Logistics />
-          <WhyBrandSethu />
-          <QuoteForm />
+          <PageContent activePage={activePage} onNavigate={handlePageChange} />
         </main>
         <Footer />
         <Toaster />

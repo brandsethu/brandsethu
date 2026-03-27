@@ -9,24 +9,9 @@ const features = [
         height="24"
         viewBox="0 0 24 24"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M12 2L3 7l9 5 9-5-9-5z"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M3 17l9 5 9-5"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M3 12l9 5 9-5"
+          d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
@@ -34,9 +19,9 @@ const features = [
         />
       </svg>
     ),
-    title: "Reliable Sourcing",
+    title: "Structured Market Access",
     description:
-      "We maintain relationships with verified, certified manufacturers to ensure consistent product availability at all times.",
+      "Joint go-to-market into focused territory and named accounts with dedicated project and sales teams.",
   },
   {
     icon: (
@@ -56,9 +41,9 @@ const features = [
         />
       </svg>
     ),
-    title: "Cost Optimization",
+    title: "Revenue Growth",
     description:
-      "Direct manufacturer partnerships and bulk procurement mean significant cost savings compared to traditional distribution channels.",
+      "We build and execute structured sales channels that enable brands to acquire customers and expand markets.",
   },
   {
     icon: (
@@ -77,9 +62,9 @@ const features = [
         />
       </svg>
     ),
-    title: "Guaranteed Quality",
+    title: "Quality Supply for Buyers",
     description:
-      "Rigorous quality control at every stage — from manufacturer onboarding to final delivery — ensures products meet corporate standards.",
+      "Reliable supply of quality and best-of-industry products and services at competitive pricing.",
   },
   {
     icon: (
@@ -99,9 +84,38 @@ const features = [
         />
       </svg>
     ),
-    title: "Expert Support",
+    title: "Dedicated Partnership",
     description:
-      "A dedicated account manager understands your business needs and coordinates across sourcing, quality, logistics, and billing.",
+      "Extended sales arm with deep expertise in Enterprise, SME, Startups and Institutional markets.",
+  },
+  {
+    icon: (
+      <svg
+        aria-hidden="true"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+        <path
+          d="M21 21l-4.35-4.35"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M11 8v3l2 2"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    title: "Best Pricing, Guaranteed",
+    description:
+      "Our research team compares capabilities, compliance, and market rates so you always get the best-in-class output at the most competitive price.",
   },
 ];
 
@@ -124,12 +138,12 @@ export default function WhyBrandSethu() {
             Why Partner with BrandSethu
           </h2>
           <p className="mt-4 text-muted-foreground text-base">
-            The Bridge Value Proposition
+            The Bridge Between Brands and Markets.
           </p>
         </motion.div>
 
         {/* Feature cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {features.map((f, i) => (
             <motion.div
               key={f.title}
@@ -151,9 +165,111 @@ export default function WhyBrandSethu() {
           ))}
         </div>
 
+        {/* Research & Pricing Intelligence band */}
+        <motion.div
+          className="mt-12 rounded-2xl overflow-hidden"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+        >
+          <div
+            className="relative px-8 py-10 lg:px-14 lg:py-12 flex flex-col lg:flex-row items-center gap-8"
+            style={{
+              background:
+                "linear-gradient(135deg, oklch(0.95 0.04 195) 0%, oklch(0.97 0.03 60) 100%)",
+              borderLeft: "4px solid oklch(0.58 0.14 195)",
+            }}
+          >
+            {/* Icon accent */}
+            <div
+              className="flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm"
+              style={{ background: "oklch(0.58 0.14 195)", color: "white" }}
+            >
+              <svg
+                aria-hidden="true"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="7"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M21 21l-4.35-4.35"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M8 11h6M11 8v6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+
+            {/* Text content */}
+            <div className="flex-1 text-center lg:text-left">
+              <h3
+                className="text-xl sm:text-2xl font-extrabold mb-2 tracking-tight"
+                style={{ color: "oklch(0.26 0.07 236)" }}
+              >
+                We Do the Hard Work For You
+              </h3>
+              <p
+                className="text-sm sm:text-base leading-relaxed mb-4 max-w-2xl"
+                style={{ color: "oklch(0.38 0.05 236)" }}
+              >
+                Our dedicated research team evaluates vendor capabilities,
+                compliance requirements, and market benchmarks — so you receive
+                the best solution at the right price, every time. No guesswork.
+                No compromise.
+              </p>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+                {["Research", "Analysis", "Compliance", "Results"].map(
+                  (tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs font-semibold px-3 py-1 rounded-full"
+                      style={{
+                        background: "oklch(0.58 0.14 195 / 0.12)",
+                        color: "oklch(0.38 0.12 195)",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ),
+                )}
+              </div>
+            </div>
+
+            {/* Research team photo */}
+            <div className="hidden lg:block flex-shrink-0">
+              <img
+                src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=600&auto=format"
+                alt="BrandSethu research and analysis team"
+                className="w-40 h-40 rounded-2xl object-cover shadow-md border-2 border-white"
+              />
+            </div>
+
+            {/* Decorative corner accent */}
+            <div
+              className="absolute top-0 right-0 w-32 h-32 opacity-10 rounded-bl-full"
+              style={{ background: "oklch(0.58 0.14 60)" }}
+            />
+          </div>
+        </motion.div>
+
         {/* Bottom CTA band */}
         <motion.div
-          className="mt-16 rounded-2xl p-10 lg:p-14 text-center"
+          className="mt-10 rounded-2xl p-10 lg:p-14 text-center"
           style={{ background: "oklch(0.26 0.07 236)" }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -161,18 +277,18 @@ export default function WhyBrandSethu() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
-            Ready to Simplify Your Supply Chain?
+            Ready to Grow Your Business?
           </h3>
           <p className="text-white/70 text-base mb-8 max-w-xl mx-auto">
-            Join 500+ corporates who trust BrandSethu for reliable,
-            cost-effective supply solutions.
+            Join brands and corporates who trust BrandSethu as their enterprise
+            sales partner.
           </p>
           <a
             href="#quote"
             className="inline-flex items-center gap-2 bg-teal hover:bg-teal-dark text-white font-semibold px-8 py-3.5 rounded-full shadow-sm transition-colors text-sm"
             data-ocid="why.primary_button"
           >
-            Get A Quote Today
+            Get Started Today
             <svg
               aria-hidden="true"
               width="14"

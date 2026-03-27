@@ -1,52 +1,71 @@
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Building2, CalendarCheck } from "lucide-react";
 import { motion } from "motion/react";
 
-const categories = [
-  "Office Stationery",
-  "Industrial Consumables",
-  "Janitorial Supplies",
-  "Safety Equipment",
-  "Printed Collateral",
-  "Promotional Items",
-  "Packaging Materials",
-  "F&B Disposables",
+const forBrands = [
+  "Enterprise Sales Setup",
+  "Institutional Market Access",
+  "Key Account Management",
+  "Revenue Growth Planning & Achievement",
+  "New Product Launch",
+  "Joint Go-To-Market into Focused Territory",
 ];
 
-const bulletPoints = [
-  "Tell us what you need — we'll find the best supplier",
-  "Rigorous quality checks before onboarding manufacturers",
-  "Competitive pricing through direct manufacturer relationships",
-  "Fully customisable products with your branding",
-];
+interface ExpandingPortfolioProps {
+  onNavigate: (page: string) => void;
+}
 
-export default function ExpandingPortfolio() {
+export default function ExpandingPortfolio({
+  onNavigate,
+}: ExpandingPortfolioProps) {
+  const whatsappMsg = encodeURIComponent(
+    "Hi BrandSethu! I'm interested in partnering with you. Please share details.",
+  );
+
   return (
     <section className="py-20 lg:py-24 bg-gradient-to-br from-secondary/5 via-background to-teal-light/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left */}
+        <motion.div
+          className="text-center mb-14"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="text-teal text-sm font-semibold uppercase tracking-widest">
+            Our Approach
+          </span>
+          <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+            What We Do
+          </h2>
+          <p className="mt-4 text-muted-foreground text-base max-w-xl mx-auto">
+            B2B Enterprise Sales Solutions
+          </p>
+        </motion.div>
+
+        <div className="max-w-2xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
+            className="bg-white rounded-2xl border border-border shadow-card p-8"
           >
-            <span className="inline-flex items-center gap-2 text-teal text-sm font-semibold uppercase tracking-widest mb-4">
-              <Sparkles size={14} /> Growing Portfolio
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-snug">
-              We Add Products <span className="text-teal">You Need.</span> We
-              Source the Best.
-            </h2>
-            <p className="mt-5 text-muted-foreground text-base leading-relaxed">
-              BrandSethu's product portfolio is entirely demand-driven. As your
-              corporate needs evolve, we proactively identify and onboard the
-              best manufacturers or service providers to bridge any supply gap —
-              so you always have a single, trusted partner.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-foreground font-medium">
-              {bulletPoints.map((item) => (
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-teal-light flex items-center justify-center">
+                <Building2 size={20} className="text-teal" />
+              </div>
+              <div>
+                <h3 className="font-bold text-foreground">
+                  For Corporate Clients (B2B)
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Owners · Founders · CFO · Procurement
+                </p>
+              </div>
+            </div>
+            <ul className="space-y-3">
+              {forBrands.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <span className="w-5 h-5 mt-0.5 rounded-full bg-teal-light flex items-center justify-center flex-shrink-0">
                     <svg
@@ -65,78 +84,39 @@ export default function ExpandingPortfolio() {
                       />
                     </svg>
                   </span>
-                  {item}
+                  <span className="text-sm text-foreground font-medium">
+                    {item}
+                  </span>
                 </li>
               ))}
             </ul>
-            <Button
-              asChild
-              size="lg"
-              className="mt-8 rounded-full bg-teal hover:bg-teal-dark text-white font-semibold px-8"
-              data-ocid="portfolio.primary_button"
-            >
-              <a href="#quote">Discuss Your Requirements</a>
-            </Button>
-          </motion.div>
 
-          {/* Right — category chips */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.1 }}
-            className="space-y-4"
-          >
-            <div className="bg-white rounded-2xl border border-border shadow-card p-8">
-              <h3 className="text-base font-bold text-foreground mb-2">
-                Categories We're Expanding Into
-              </h3>
-              <p className="text-sm text-muted-foreground mb-6">
-                Based on corporate client demand — and growing.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {categories.map((cat, i) => (
-                  <span
-                    key={cat}
-                    className={`text-sm font-medium px-4 py-2 rounded-full border transition-all ${
-                      i % 3 === 0
-                        ? "bg-teal text-white border-teal"
-                        : i % 3 === 1
-                          ? "bg-teal-light text-teal-dark border-teal/20"
-                          : "bg-background border-border text-foreground"
-                    }`}
-                  >
-                    {cat}
-                  </span>
-                ))}
-                <span className="text-sm font-medium px-4 py-2 rounded-full border border-dashed border-muted-foreground/40 text-muted-foreground">
-                  + Your Category
-                </span>
-              </div>
-              <div className="mt-6 pt-6 border-t border-border flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center">
-                  <svg
-                    aria-hidden="true"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M12 2v20M2 12h20"
-                      stroke="oklch(0.26 0.07 236)"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  <strong className="text-foreground">
-                    Don't see your category?
-                  </strong>{" "}
-                  We'll source it for you.
-                </p>
-              </div>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <Button
+                type="button"
+                onClick={() => onNavigate("contact")}
+                size="lg"
+                className="flex-1 rounded-full bg-teal hover:bg-teal-dark text-white font-semibold gap-2"
+                data-ocid="whatwedo.book_appointment_button"
+              >
+                <CalendarCheck size={18} />
+                Book Free Consultation
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="flex-1 rounded-full border-teal text-teal hover:bg-teal-light font-semibold gap-2"
+                data-ocid="whatwedo.whatsapp_button"
+              >
+                <a
+                  href={`https://wa.me/919920989333?text=${whatsappMsg}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp Us
+                </a>
+              </Button>
             </div>
           </motion.div>
         </div>
