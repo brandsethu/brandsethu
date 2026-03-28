@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 
 const products = [
@@ -44,7 +45,7 @@ const products = [
     id: "giftings",
     image: "/assets/generated/section-gifting.dim_800x500.jpg",
     imageAlt: "Corporate gift hampers and branded merchandise",
-    category: "Corporate Giftings",
+    category: "Corporate Gifting",
     title: "Corporate Gift Solutions",
     description:
       "Curated gifting solutions for employee rewards, client appreciation, festive seasons, and brand activations. Custom gift hampers, branded merchandise, and promotional kits — fully customizable to your brand identity and budget.",
@@ -64,7 +65,11 @@ const products = [
   },
 ];
 
-export default function Products() {
+interface ProductsProps {
+  onNavigate?: (page: string, anchor?: string) => void;
+}
+
+export default function Products({ onNavigate }: ProductsProps) {
   return (
     <section id="products" className="py-20 lg:py-28 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,12 +84,12 @@ export default function Products() {
             Our Portfolio
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
-            Products & Services
+            Products &amp; Services
           </h2>
           <p className="mt-4 text-muted-foreground text-base max-w-xl mx-auto">
             A focused range of products and solutions for institutional and
-            corporate buyers — sourced from trusted manufacturers and delivered
-            with reliability.
+            corporate buyers &mdash; sourced from trusted manufacturers and
+            delivered with reliability.
           </p>
         </motion.div>
 
@@ -92,6 +97,7 @@ export default function Products() {
           {products.map((product, i) => (
             <motion.div
               key={product.id}
+              id={product.id}
               data-ocid={`products.item.${i + 1}`}
               className="group bg-white rounded-2xl border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden"
               initial={{ opacity: 0, y: 24 }}
@@ -121,7 +127,7 @@ export default function Products() {
                   {product.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2 mt-auto">
+                <div className="flex flex-wrap gap-2 mb-5">
                   {product.tags.map((tag) => (
                     <Badge
                       key={tag}
@@ -132,6 +138,19 @@ export default function Products() {
                     </Badge>
                   ))}
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => onNavigate?.("contact")}
+                  data-ocid={`products.${product.id}.button`}
+                  className="mt-auto flex items-center gap-1.5 text-teal font-semibold text-sm hover:gap-2.5 transition-all group/btn"
+                >
+                  Get a Quote
+                  <ArrowRight
+                    size={15}
+                    className="group-hover/btn:translate-x-0.5 transition-transform"
+                  />
+                </button>
               </div>
             </motion.div>
           ))}

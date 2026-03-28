@@ -1,13 +1,32 @@
-import {
-  SiFacebook,
-  SiInstagram,
-  SiLinkedin,
-  SiWhatsapp,
-  SiX,
-} from "react-icons/si";
+import { SiFacebook, SiLinkedin, SiWhatsapp } from "react-icons/si";
 
-export default function Footer() {
+interface FooterProps {
+  onNavigate?: (page: string, anchor?: string) => void;
+}
+
+export default function Footer({ onNavigate }: FooterProps) {
   const year = new Date().getFullYear();
+
+  const navigate = (page: string, anchor?: string) => {
+    if (onNavigate) {
+      onNavigate(page, anchor);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const aboutLinks = [
+    { label: "About Us", page: "about" },
+    { label: "Industries We Serve", page: "industries" },
+    { label: "Contact Us", page: "contact" },
+  ];
+
+  const productLinks = [
+    { label: "Tissues & Office Supplies", page: "products", anchor: "tissues" },
+    { label: "Corrugated & Packaging", page: "products", anchor: "packaging" },
+    { label: "Corporate Gift Solutions", page: "products", anchor: "giftings" },
+    { label: "Logistics & Warehousing", page: "products", anchor: "logistics" },
+    { label: "We're Hiring", page: "careers" },
+  ];
 
   return (
     <footer
@@ -18,57 +37,39 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="mb-5 bg-white rounded-xl p-2 inline-block">
+            <button
+              type="button"
+              onClick={() => navigate("home")}
+              className="mb-5 bg-white rounded-xl p-2 inline-block"
+            >
               <img
                 src="/assets/uploads/logo-019d300a-b4af-7279-b582-865cbef1feea-1.jpeg"
                 alt="BrandSethu Pvt Ltd"
                 className="h-10 w-auto object-contain"
               />
-            </div>
+            </button>
             <p className="text-white/60 text-sm leading-relaxed">
-              Enterprise Sales Growth Partner — connecting product brands with
-              institutional and corporate buyers across India.
+              Enterprise Sales Growth Partner &mdash; connecting product brands
+              with institutional and corporate buyers across India.
             </p>
             <div className="flex gap-3 mt-6">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/brand-sethu-a07b993ba"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="w-9 h-9 rounded-lg bg-white/10 hover:bg-teal flex items-center justify-center transition-colors"
-                data-ocid="footer.link"
               >
                 <SiLinkedin size={15} />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/18WvYKBBtA/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
                 className="w-9 h-9 rounded-lg bg-white/10 hover:bg-teal flex items-center justify-center transition-colors"
-                data-ocid="footer.link"
               >
                 <SiFacebook size={15} />
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="X (Twitter)"
-                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-teal flex items-center justify-center transition-colors"
-                data-ocid="footer.link"
-              >
-                <SiX size={14} />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-pink-500 flex items-center justify-center transition-colors"
-                data-ocid="footer.link"
-              >
-                <SiInstagram size={15} />
               </a>
               <a
                 href="https://wa.me/919920989333"
@@ -76,33 +77,27 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
                 className="w-9 h-9 rounded-lg bg-white/10 hover:bg-[#25D366] flex items-center justify-center transition-colors"
-                data-ocid="footer.link"
               >
                 <SiWhatsapp size={15} />
               </a>
             </div>
           </div>
 
-          {/* About */}
+          {/* Quick Links */}
           <div>
             <h4 className="text-sm font-bold uppercase tracking-widest mb-5 text-white/80">
-              About
+              Quick Links
             </h4>
             <ul className="space-y-3">
-              {[
-                { label: "About Us", href: "#about" },
-                { label: "What We Do", href: "#products" },
-                { label: "Brand Partners", href: "#brands" },
-                { label: "Contact Us", href: "#quote" },
-              ].map((item) => (
+              {aboutLinks.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="text-sm text-white/60 hover:text-white transition-colors"
-                    data-ocid="footer.link"
+                  <button
+                    type="button"
+                    onClick={() => navigate(item.page)}
+                    className="text-sm text-white/60 hover:text-white transition-colors text-left"
                   >
                     {item.label}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -111,24 +106,18 @@ export default function Footer() {
           {/* Products */}
           <div>
             <h4 className="text-sm font-bold uppercase tracking-widest mb-5 text-white/80">
-              Products & Services
+              Products &amp; Services
             </h4>
             <ul className="space-y-3">
-              {[
-                { label: "Logistics — TruMove", href: "#products" },
-                { label: "Hygiene — FRESHONES", href: "#products" },
-                { label: "Packaging — LET'S PAC", href: "#products" },
-                { label: "Giftings — CORRUGA", href: "#products" },
-                { label: "Export — NKB", href: "#products" },
-              ].map((item) => (
+              {productLinks.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="text-sm text-white/60 hover:text-white transition-colors"
-                    data-ocid="footer.link"
+                  <button
+                    type="button"
+                    onClick={() => navigate(item.page, item.anchor)}
+                    className="text-sm text-white/60 hover:text-white transition-colors text-left"
                   >
                     {item.label}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -159,7 +148,6 @@ export default function Footer() {
                 </svg>
                 <a
                   href="mailto:business@brandsethu.in"
-                  rel="noopener noreferrer"
                   className="text-sm text-white/60 hover:text-white transition-colors"
                 >
                   business@brandsethu.in
@@ -240,12 +228,15 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-sm text-white/50">
             &copy; {year} BrandSethu Pvt Ltd. All rights reserved.
           </p>
+          <p className="text-xs text-white/40 text-center">
+            PAN: AAOCB5780F &nbsp;|&nbsp; CIN: U82990MR2026PTC474811
+          </p>
           <p className="text-sm text-white/40">
-            Built with ❤️ using{" "}
+            Built with &#10084;&#65039; using{" "}
             <a
               href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
               target="_blank"

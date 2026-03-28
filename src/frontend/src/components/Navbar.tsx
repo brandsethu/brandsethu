@@ -1,26 +1,36 @@
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const navLinks = [
   { label: "Home", page: "home" },
   { label: "About Us", page: "about" },
   { label: "Products & Services", page: "products" },
   { label: "Industries", page: "industries" },
-  { label: "Our Partners", page: "partners" },
   { label: "We're Hiring", page: "careers", highlight: true },
   { label: "Contact", page: "contact" },
 ];
 
+const productCategories = [
+  { label: "Tissues, Office Supplies & Bamboo Products", anchor: "tissues" },
+  { label: "Corrugated, Honeycomb & Pallets", anchor: "packaging" },
+  { label: "Corporate Gift Solutions", anchor: "giftings" },
+  { label: "Logistics & Warehousing", anchor: "logistics" },
+];
+
 interface NavbarProps {
   activePage: string;
-  setActivePage: (page: string) => void;
+  setActivePage: (page: string, anchor?: string) => void;
 }
 
 export default function Navbar({ activePage, setActivePage }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -28,14 +38,24 @@ export default function Navbar({ activePage, setActivePage }: NavbarProps) {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const handleNav = (page: string) => {
-    setActivePage(page);
+  const handleNav = (page: string, anchor?: string) => {
+    setActivePage(page, anchor);
     setMobileOpen(false);
+    setDropdownOpen(false);
   };
 
   const handlePartnerWithUs = () => {
-    setActivePage("contact");
+    setActivePage("contact", "quote");
     setMobileOpen(false);
+  };
+
+  const openDropdown = () => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    setDropdownOpen(true);
+  };
+
+  const closeDropdown = () => {
+    hoverTimeout.current = setTimeout(() => setDropdownOpen(false), 150);
   };
 
   return (
@@ -56,34 +76,96 @@ export default function Navbar({ activePage, setActivePage }: NavbarProps) {
             <img
               src="/assets/uploads/logo-019d300a-b4af-7279-b582-865cbef1feea-1.jpeg"
               alt="BrandSethu Pvt Ltd"
-              className="h-12 w-auto object-contain"
+              className="h-16 w-auto object-contain"
             />
           </button>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <button
-                key={link.page}
-                type="button"
-                onClick={() => handleNav(link.page)}
-                data-ocid="nav.link"
-                className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
-                  link.highlight
-                    ? activePage === link.page
-                      ? "bg-orange-500 text-white font-bold shadow-sm"
-                      : "bg-orange-100 text-orange-700 hover:bg-orange-500 hover:text-white font-semibold"
-                    : activePage === link.page
-                      ? "text-foreground font-bold bg-muted"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
-              >
-                {link.highlight && (
-                  <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse" />
-                )}
-                {link.label}
-              </button>
-            ))}
+            {navLinks.map((link) =>
+              link.page === "products" ? (
+                <div
+                  key={link.page}
+                  className="relative"
+                  ref={dropdownRef}
+                  onMouseEnter={openDropdown}
+                  onMouseLeave={closeDropdown}
+                >
+                  <button
+                    type="button"
+                    onClick={() => handleNav(link.page)}
+                    data-ocid="nav.link"
+                    className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
+                      activePage === link.page
+                        ? "text-foreground font-bold bg-muted"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    }`}
+                  >
+                    {link.label}
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform duration-200 ${
+                        dropdownOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {/* Dropdown Panel */}
+                  <AnimatePresence>
+                    {dropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.15 }}
+                        onMouseEnter={openDropdown}
+                        onMouseLeave={closeDropdown}
+                        className="absolute top-full left-0 mt-1 w-72 bg-white border border-border rounded-xl shadow-lg z-50 overflow-hidden"
+                      >
+                        <div className="py-1">
+                          {productCategories.map((cat) => (
+                            <button
+                              key={cat.anchor}
+                              type="button"
+                              onClick={() => handleNav("products", cat.anchor)}
+                              data-ocid="nav.link"
+                              className="w-full flex items-center justify-between gap-2 px-4 py-3 text-sm text-foreground hover:bg-orange-50 hover:text-orange-700 transition-colors text-left group"
+                            >
+                              <span className="font-medium">{cat.label}</span>
+                              <ArrowRight
+                                size={14}
+                                className="shrink-0 text-muted-foreground group-hover:text-orange-500 transition-colors"
+                              />
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <button
+                  key={link.page}
+                  type="button"
+                  onClick={() => handleNav(link.page)}
+                  data-ocid="nav.link"
+                  className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
+                    link.highlight
+                      ? activePage === link.page
+                        ? "bg-orange-500 text-white font-bold shadow-sm"
+                        : "bg-orange-100 text-orange-700 hover:bg-orange-500 hover:text-white font-semibold"
+                      : activePage === link.page
+                        ? "text-foreground font-bold bg-muted"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
+                >
+                  {link.highlight && (
+                    <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse" />
+                  )}
+                  {link.label}
+                </button>
+              ),
+            )}
           </div>
 
           {/* Right Actions */}
@@ -139,28 +221,81 @@ export default function Navbar({ activePage, setActivePage }: NavbarProps) {
             className="lg:hidden bg-white border-t border-border overflow-hidden"
           >
             <div className="px-4 py-4 flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.page}
-                  type="button"
-                  onClick={() => handleNav(link.page)}
-                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors text-left ${
-                    link.highlight
-                      ? activePage === link.page
-                        ? "bg-orange-500 text-white font-bold"
-                        : "bg-orange-100 text-orange-700 font-semibold"
-                      : activePage === link.page
-                        ? "bg-muted text-foreground font-bold"
-                        : "text-foreground hover:bg-muted"
-                  }`}
-                  data-ocid="nav.link"
-                >
-                  {link.highlight && (
-                    <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse" />
-                  )}
-                  {link.label}
-                </button>
-              ))}
+              {navLinks.map((link) =>
+                link.page === "products" ? (
+                  <div key={link.page}>
+                    <button
+                      type="button"
+                      onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+                      data-ocid="nav.link"
+                      className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-lg transition-colors text-left ${
+                        activePage === link.page
+                          ? "bg-muted text-foreground font-bold"
+                          : "text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      {link.label}
+                      <ChevronDown
+                        size={14}
+                        className={`transition-transform duration-200 ${
+                          mobileProductsOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {mobileProductsOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="ml-4 mt-1 flex flex-col gap-1 border-l-2 border-orange-200 pl-3">
+                            {productCategories.map((cat) => (
+                              <button
+                                key={cat.anchor}
+                                type="button"
+                                onClick={() =>
+                                  handleNav("products", cat.anchor)
+                                }
+                                data-ocid="nav.link"
+                                className="flex items-center gap-2 px-3 py-2.5 text-sm text-muted-foreground hover:text-orange-700 hover:bg-orange-50 rounded-lg transition-colors text-left"
+                              >
+                                <ArrowRight
+                                  size={12}
+                                  className="shrink-0 text-orange-400"
+                                />
+                                {cat.label}
+                              </button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <button
+                    key={link.page}
+                    type="button"
+                    onClick={() => handleNav(link.page)}
+                    className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors text-left ${
+                      link.highlight
+                        ? activePage === link.page
+                          ? "bg-orange-500 text-white font-bold"
+                          : "bg-orange-100 text-orange-700 font-semibold"
+                        : activePage === link.page
+                          ? "bg-muted text-foreground font-bold"
+                          : "text-foreground hover:bg-muted"
+                    }`}
+                    data-ocid="nav.link"
+                  >
+                    {link.highlight && (
+                      <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse" />
+                    )}
+                    {link.label}
+                  </button>
+                ),
+              )}
               <a
                 href="https://wa.me/919920989333"
                 target="_blank"

@@ -57,7 +57,7 @@ function PageContent({
   onNavigate,
 }: {
   activePage: Page;
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, anchor?: string) => void;
 }) {
   switch (activePage) {
     case "home":
@@ -75,11 +75,11 @@ function PageContent({
       return (
         <>
           <AboutUs />
-          <WhyBrandSethu />
+          <WhyBrandSethu onNavigate={onNavigate} />
         </>
       );
     case "products":
-      return <Products />;
+      return <Products onNavigate={onNavigate} />;
     case "industries":
       return <IndustriesWeServe />;
     case "partners":
@@ -101,9 +101,14 @@ function PageContent({
 export default function App() {
   const [activePage, setActivePage] = useState<Page>("home");
 
-  const handlePageChange = (page: string) => {
+  const handlePageChange = (page: string, anchor?: string) => {
     setActivePage(page as Page);
     window.scrollTo(0, 0);
+    if (anchor) {
+      setTimeout(() => {
+        document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    }
   };
 
   return (
@@ -113,7 +118,7 @@ export default function App() {
         <main>
           <PageContent activePage={activePage} onNavigate={handlePageChange} />
         </main>
-        <Footer />
+        <Footer onNavigate={handlePageChange} />
         <Toaster />
         <WhatsAppFAB />
       </div>

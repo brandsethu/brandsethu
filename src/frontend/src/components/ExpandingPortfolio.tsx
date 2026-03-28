@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Building2, CalendarCheck } from "lucide-react";
+import { Building2, FileText } from "lucide-react";
 import { motion } from "motion/react";
 
 const forBrands = [
@@ -12,7 +12,7 @@ const forBrands = [
 ];
 
 interface ExpandingPortfolioProps {
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, anchor?: string) => void;
 }
 
 export default function ExpandingPortfolio({
@@ -60,7 +60,7 @@ export default function ExpandingPortfolio({
                   For Corporate Clients (B2B)
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  Owners · Founders · CFO · Procurement
+                  Owners &middot; Founders &middot; CFO &middot; Procurement
                 </p>
               </div>
             </div>
@@ -94,13 +94,13 @@ export default function ExpandingPortfolio({
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Button
                 type="button"
-                onClick={() => onNavigate("contact")}
+                onClick={() => onNavigate("contact", "quote")}
                 size="lg"
                 className="flex-1 rounded-full bg-teal hover:bg-teal-dark text-white font-semibold gap-2"
-                data-ocid="whatwedo.book_appointment_button"
+                data-ocid="whatwedo.request_proposal_button"
               >
-                <CalendarCheck size={18} />
-                Book Free Consultation
+                <FileText size={18} />
+                Request a Proposal
               </Button>
               <Button
                 asChild

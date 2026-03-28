@@ -1,4 +1,4 @@
-import { Building2, Factory, Handshake, LayoutGrid, Mail } from "lucide-react";
+import { Building2, Factory, LayoutGrid, Mail } from "lucide-react";
 import { motion } from "motion/react";
 
 const pages = [
@@ -27,14 +27,6 @@ const pages = [
     iconBg: "bg-amber-100",
   },
   {
-    page: "partners",
-    label: "Our Partners",
-    icon: Handshake,
-    description: "Trusted network",
-    color: "bg-purple-50 text-purple-700 border-purple-200",
-    iconBg: "bg-purple-100",
-  },
-  {
     page: "contact",
     label: "Contact Us",
     icon: Mail,
@@ -55,7 +47,7 @@ export default function PageNavCards({ onNavigate }: PageNavCardsProps) {
         <p className="text-center text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-6">
           Explore BrandSethu
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {pages.map((item, i) => (
             <motion.button
               key={item.page}

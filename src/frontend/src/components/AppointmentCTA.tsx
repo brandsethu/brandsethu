@@ -6,7 +6,7 @@ export default function AppointmentCTA() {
     "Hi BrandSethu! I'd like to schedule a free consultation to discuss my B2B sourcing needs.",
   );
   const emailSubject = encodeURIComponent(
-    "Appointment Request \u2014 BrandSethu Consultation",
+    "Appointment Request - BrandSethu Consultation",
   );
   const emailBody = encodeURIComponent(
     "Hi BrandSethu Team,\n\nI would like to schedule a free consultation.\n\nCompany Name: \nContact Person: \nPhone: \nPreferred Date & Time: \nTopic: \n\nThank you!",
@@ -56,17 +56,13 @@ export default function AppointmentCTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm text-white text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-wider mb-5">
-            <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
-            Free Consultation \u2014 No Commitment
-          </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
             Ready to Source Smarter?{" "}
-            <span className="text-orange-400">Book a Free Call.</span>
+            <span className="text-orange-400">Get a Tailored Proposal.</span>
           </h2>
           <p className="mt-5 text-white/75 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             Let our team understand your needs, compare the best options for
-            you, and present a tailored proposal \u2014 at zero cost.
+            you, and present a tailored proposal at zero cost.
           </p>
         </motion.div>
 
@@ -99,16 +95,19 @@ export default function AppointmentCTA() {
           ))}
         </div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center text-white/50 text-sm mt-10"
+          className="flex justify-center mt-10"
         >
-          Our team responds within 2 business hours \u00b7 Mon \u2013 Sat, 9 AM
-          \u2013 7 PM IST
-        </motion.p>
+          <p className="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur-sm rounded-full px-6 py-3 text-white font-bold text-sm tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
+            Our team responds within 2 business hours &nbsp;&middot;&nbsp; Mon
+            &ndash; Sat, 9 AM &ndash; 7 PM IST
+          </p>
+        </motion.div>
       </div>
     </section>
   );

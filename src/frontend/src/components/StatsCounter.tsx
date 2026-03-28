@@ -10,8 +10,7 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { value: 6, suffix: "+", prefix: "", label: "Brand Partners Onboard" },
-  { value: 12, suffix: "+", prefix: "", label: "Product & Service Categories" },
+  { value: 4, suffix: "+", prefix: "", label: "Product & Service Categories" },
   {
     value: null,
     suffix: "",
@@ -20,6 +19,13 @@ const stats: StatItem[] = [
     display: "Pan-India",
   },
   { value: 100, suffix: "%", prefix: "", label: "Compliance Guaranteed" },
+  {
+    value: null,
+    suffix: "",
+    prefix: "",
+    label: "Response Time",
+    display: "< 2 Hours",
+  },
 ];
 
 function Counter({
@@ -79,7 +85,6 @@ export default function StatsCounter() {
       className="py-16 bg-teal-dark relative overflow-hidden"
       data-ocid="stats.section"
     >
-      {/* Background pattern */}
       <div
         className="absolute inset-0 opacity-5"
         style={{

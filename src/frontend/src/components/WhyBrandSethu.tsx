@@ -119,7 +119,9 @@ const features = [
   },
 ];
 
-export default function WhyBrandSethu() {
+export default function WhyBrandSethu({
+  onNavigate,
+}: { onNavigate?: (page: string, anchor?: string) => void }) {
   return (
     <section id="why" className="py-20 lg:py-28 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -283,8 +285,9 @@ export default function WhyBrandSethu() {
             Join brands and corporates who trust BrandSethu as their enterprise
             sales partner.
           </p>
-          <a
-            href="#quote"
+          <button
+            type="button"
+            onClick={() => onNavigate?.("contact", "quote")}
             className="inline-flex items-center gap-2 bg-teal hover:bg-teal-dark text-white font-semibold px-8 py-3.5 rounded-full shadow-sm transition-colors text-sm"
             data-ocid="why.primary_button"
           >
@@ -304,7 +307,7 @@ export default function WhyBrandSethu() {
                 strokeLinejoin="round"
               />
             </svg>
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>

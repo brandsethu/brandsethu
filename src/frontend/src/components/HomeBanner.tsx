@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 
 interface HomeBannerProps {
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, anchor?: string) => void;
 }
 
 export default function HomeBanner({ onNavigate }: HomeBannerProps) {
@@ -66,7 +66,7 @@ export default function HomeBanner({ onNavigate }: HomeBannerProps) {
             >
               <Button
                 type="button"
-                onClick={() => onNavigate("contact")}
+                onClick={() => onNavigate("contact", "quote")}
                 data-ocid="banner.primary_button"
                 className="rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 text-base shadow-lg hover:shadow-xl transition-all gap-2"
                 size="lg"
